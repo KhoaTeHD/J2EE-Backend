@@ -22,9 +22,6 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long userId;
-    
-    @Column(nullable = false)
-    private String username;
 
     @Column(nullable = false, length = 20)
     private String profileName;
@@ -72,7 +69,18 @@ public class User {
     
     @OneToMany(mappedBy = "user")
     private List<Comment> comments;
+    
+	public User() {
 
+	}
+
+	public User(String gmail, String password, String profileName, LocalDate signupDate) {
+		this.gmail = gmail;
+		this.password = password;
+		this.profileName = profileName;
+		this.signupDate = signupDate;
+	}
+	
 	public long getUserId() {
 		return userId;
 	}
@@ -81,13 +89,6 @@ public class User {
 		this.userId = userId;
 	}
 
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
 
 	public String getProfileName() {
 		return profileName;

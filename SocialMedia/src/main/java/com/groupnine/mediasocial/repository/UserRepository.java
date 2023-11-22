@@ -11,10 +11,12 @@ import com.groupnine.mediasocial.entity.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 	
+	@Query(value = "SELECT * FROM users u WHERE u.gmail = ?1", nativeQuery = true)
+	Optional<User> findByGmail(String gmail);
+	@Query(value = "SELECT * FROM users u WHERE u.gmail = ?1", nativeQuery = true)
+	Optional<User> existsByGmail(String gmail);
 	
-	public Optional<User> findByGmail(String Gmail);
-	
-	public Optional<User> findByUsername(String username);
+//	public Optional<User> findByUsername(String username);
 	
 	@Query(value = "SELECT * From users u Where u.user_id IN :users", nativeQuery = true)
 	public List<User> findAllUsersByUserIds(@Param("users") List<Long> userIds);
