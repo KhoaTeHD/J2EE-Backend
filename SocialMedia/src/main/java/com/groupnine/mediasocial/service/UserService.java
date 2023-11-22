@@ -19,5 +19,5 @@ public interface UserService {
 	
 	public User updateUserDetails(User updatedUser, User existingUser) throws UserException;
 	
-	
+	public int getMutualFriends(Long CurrentUserId, Long targetUserId) throws UserException;
 }
