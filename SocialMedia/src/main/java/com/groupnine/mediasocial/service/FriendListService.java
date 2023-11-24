@@ -1,5 +1,8 @@
 package com.groupnine.mediasocial.service;
 
-public class FriendListService {
+import org.springframework.stereotype.Service;
+
+@Service
+public interface FriendListService {
 
 }

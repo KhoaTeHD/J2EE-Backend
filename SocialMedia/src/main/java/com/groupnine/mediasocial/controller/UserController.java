@@ -62,12 +62,4 @@ public class UserController {
 		
 		return null;
 	}
-	
-	@GetMapping("/friends/{userIds}")
-	public int getMutualFriendsHandler(@PathVariable List<Long> userIds) throws UserException{
-		
-		int result = userService.getMutualFriends(userIds.get(0), userIds.get(1));
-		
-		return result;
-	}
 }
