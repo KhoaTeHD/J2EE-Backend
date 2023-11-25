@@ -21,8 +21,8 @@ import com.groupnine.mediasocial.service.UserDetailsServiceImpl;
 @Configuration
 @EnableMethodSecurity
 // (securedEnabled = true,
-// jsr250Enabled = true,
-// prePostEnabled = true) // by default
+//  jsr250Enabled  = true,
+//  prePostEnabled = true ) // by default
 public class WebSecurityConfig { 
 	@Autowired
 	UserDetailsServiceImpl userDetailsService;
@@ -56,21 +56,21 @@ public class WebSecurityConfig {
 	}
 
 	@Bean
-	  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 	    http.csrf(csrf -> csrf.disable())
 	        .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
 	        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 	        .authorizeHttpRequests(auth -> 
 	          auth.requestMatchers("/api/auth/**").permitAll()
-	              .requestMatchers("/api/test/**").permitAll()
+	              .requestMatchers("/api/friends/**").permitAll()
 	              .anyRequest().authenticated()
 	        );
-	    
+	    	
 	    http.authenticationProvider(authenticationProvider());
 
 	    http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 	    
 	    return http.build();
-	  }
+	}
 
 }

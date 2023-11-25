@@ -18,7 +18,7 @@ import com.groupnine.mediasocial.service.UserService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
-//@RequestMapping("/api/friends")
+@RequestMapping("/api/friends")
 public class FriendListController {
 	
 	//@Autowired
