@@ -68,4 +68,37 @@ public class UserServiceImplementation implements UserService {
 		
 		throw new UserException("you can't get mutual friends");
 	}
+
+	@Override
+	public List<User> findFriendForId(Long userId) throws UserException {
+		Optional<User> user = userRepository.findById(userId);
+		List<User> frList = user.get().getFriends();		
+		
+		User friend = null;
+		int max = 0;
+		
+		for(User u : frList) {
+			int temp = u.getFriends().size();
+			if(max < temp) {
+				max = temp;
+				friend = u;
+			}
+		}
+		
+		List<User> a = null;
+		
+		if(friend.getFriends() != null) {a = friend.getFriends();}
+		
+		for(User u : a) {
+			if(frList.contains(u)) {
+				a.remove(u);
+			}
+		}
+		
+		if(a.size() > 5) {
+			a = a.subList(0, 4);
+		}
+
+		return a;
+	}
 }

@@ -29,7 +29,7 @@ public class User {
     @Column(nullable = false, length = 30)
     private String gmail;
 
-    @Column(length = 50)
+    @Column(length = 150)
     private String biography;
 
     @Column
