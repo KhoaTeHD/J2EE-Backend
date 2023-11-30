@@ -95,6 +95,8 @@ public class UserServiceImplementation implements UserService {
 			}
 		}
 		
+		if(a.contains(user.get())) { a.remove(user.get()); }
+		
 		if(a.size() > 5) {
 			a = a.subList(0, 4);
 		}
