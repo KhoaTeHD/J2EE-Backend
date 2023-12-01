@@ -66,6 +66,8 @@ public class FriendListController {
 		
 		for (User u : recommend) {
 			u.setFriends(null);
+			u.setSentFriendRequest(null);
+			u.setReceivedFriendRequest(null);
 		}
 		
 		return new ResponseEntity<List<User>>(recommend,HttpStatus.OK);

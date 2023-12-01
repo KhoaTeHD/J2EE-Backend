@@ -50,9 +50,11 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
 		filterChain.doFilter(request, response);
 	}
-	private void setBearerToken(HttpServletResponse response, String token) {
-	    response.setHeader("Authorization", "Bearer " + token);
-	}
+	
+//	private void setBearerToken(HttpServletResponse response, String token) {
+//	    response.setHeader("Authorization", "Bearer " + token);
+//	}
+	
 	private String parseJwt(HttpServletRequest request) {
 		 String headerAuth = request.getHeader("Authorization");
 
@@ -61,8 +63,9 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 		        String token = headerAuth.substring(7);
 
 		        // Thiết lập header với token Bearer trong phản hồi
-		        HttpServletResponse response = (HttpServletResponse) request;
-		        setBearerToken(response, token);
+		        
+		        //HttpServletResponse response = (HttpServletResponse) request;
+		        //setBearerToken(response, token);
 
 		        return token;
 		    }
