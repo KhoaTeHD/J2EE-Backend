@@ -7,6 +7,8 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.groupnine.mediasocial.entity.FriendRequest;
 import com.groupnine.mediasocial.entity.User;
 import com.groupnine.mediasocial.exception.UserException;
 import com.groupnine.mediasocial.repository.UserRepository;
@@ -76,6 +78,7 @@ public class UserServiceImplementation implements UserService {
 	public List<User> findFriendForId(Long userId) throws UserException {
 		Optional<User> user = userRepository.findById(userId);
 		List<User> frList = user.get().getFriends();
+		
 		List<User> uList = userRepository.findAll();
 		uList.remove(user.get());
 		
@@ -83,6 +86,9 @@ public class UserServiceImplementation implements UserService {
 			for(User u : frList) {
 				if(uList.contains(u)) {
 					uList.remove(u);
+				}
+				if(true) {
+					
 				}
 			}
 		}
