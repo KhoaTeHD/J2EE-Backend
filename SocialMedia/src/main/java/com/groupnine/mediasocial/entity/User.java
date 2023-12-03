@@ -62,6 +62,9 @@ public class User {
     private List<FriendRequest> receivedFriendRequest;
     
     @OneToMany(mappedBy = "user")
+    private List<Post> posts;
+    
+    @OneToMany(mappedBy = "user")
     private List<Share> shared;
     
     @OneToMany(mappedBy = "user")
