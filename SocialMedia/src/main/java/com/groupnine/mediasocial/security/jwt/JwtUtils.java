@@ -2,6 +2,10 @@ package com.groupnine.mediasocial.security.jwt;
 
 import java.security.Key;
 import java.util.Date;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.web.util.WebUtils;
+import org.springframework.http.ResponseCookie;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +29,27 @@ public class JwtUtils {
 	@Value("${groupnine.mediasocial.app.jwtExpirationMs}")
 	private int jwtExpirationMs;
 
+	private String jwtCookie;
+	
+	public String getJwtFromCookies(HttpServletRequest request) {
+	    Cookie cookie = WebUtils.getCookie(request, jwtCookie);
+	    if (cookie != null) {
+	      return cookie.getValue();
+	    } else {
+	      return null;
+	    }
+	  }
+
+	  public ResponseCookie generateJwtCookie(UserDetailsImpl userPrincipal) {
+	    String jwt = generateTokenFromUsername(userPrincipal.getGmail());
+	    ResponseCookie cookie = ResponseCookie.from(jwtCookie, jwt).path("/api").maxAge(24 * 60 * 60).httpOnly(true).build();
+	    return cookie;
+	  }
+
+	  public ResponseCookie getCleanJwtCookie() {
+	    ResponseCookie cookie = ResponseCookie.from(jwtCookie, null).path("/api").build();
+	    return cookie;
+	  }
 	public String generateJwtToken(Authentication authentication) {
 
 		UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
@@ -58,4 +83,12 @@ public class JwtUtils {
 
 		return false;
 	}
+	 public String generateTokenFromUsername(String gmail) {   
+		    return Jwts.builder()
+		               .setSubject(gmail)
+		               .setIssuedAt(new Date())
+		               .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
+		               .signWith(key(), SignatureAlgorithm.HS256)
+		               .compact();
+		  }
 }
