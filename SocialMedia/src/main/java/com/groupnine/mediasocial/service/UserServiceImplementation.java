@@ -1,13 +1,18 @@
 package com.groupnine.mediasocial.service;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.groupnine.mediasocial.entity.FriendRequest;
 import com.groupnine.mediasocial.entity.User;
 import com.groupnine.mediasocial.exception.UserException;
 import com.groupnine.mediasocial.repository.UserRepository;
+
 
 @Service
 public class UserServiceImplementation implements UserService {
@@ -72,33 +77,40 @@ public class UserServiceImplementation implements UserService {
 	@Override
 	public List<User> findFriendForId(Long userId) throws UserException {
 		Optional<User> user = userRepository.findById(userId);
-		List<User> frList = user.get().getFriends();		
+		List<User> frList = user.get().getFriends();
 		
-		User friend = null;
-		int max = 0;
+		List<User> uList = userRepository.findAll();
+		uList.remove(user.get());
 		
-		for(User u : frList) {
-			int temp = u.getFriends().size();
-			if(max < temp) {
-				max = temp;
-				friend = u;
+		if(!frList.isEmpty()) {
+			for(User u : frList) {
+				if(uList.contains(u)) {
+					uList.remove(u);
+				}
+				if(true) {
+					
+				}
 			}
 		}
 		
-		List<User> a = null;
-		
-		if(friend.getFriends() != null) {a = friend.getFriends();}
-		
-		for(User u : a) {
-			if(frList.contains(u)) {
-				a.remove(u);
+		Collections.sort(uList, new Comparator<User>() {
+
+			@Override
+			public int compare(User o1, User o2) {
+				if(o1.getFriends().size() < o2.getFriends().size()) {
+					return 1;
+				}
+				else if(o1.getFriends().size() > o2.getFriends().size()) {
+					return -1;
+				}
+				return 0;
 			}
-		}
+		});
 		
-		if(a.size() > 5) {
-			a = a.subList(0, 4);
+		if(uList.size() > 5) {
+			uList = uList.subList(0, 4);
 		}
 
-		return a;
+		return uList;
 	}
 }
