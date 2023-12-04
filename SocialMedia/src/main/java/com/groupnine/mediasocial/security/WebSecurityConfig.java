@@ -63,6 +63,7 @@ public class WebSecurityConfig {
 	        .authorizeHttpRequests(auth -> 
 	          auth.requestMatchers("/api/auth/**").permitAll()
 	              .requestMatchers("/api/friends/**").permitAll()
+	              .requestMatchers("/post/**").permitAll()
 	              .anyRequest().authenticated()
 	        );
 	    	
