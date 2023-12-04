@@ -63,12 +63,9 @@ public class WebSecurityConfig {
 	        .authorizeHttpRequests(auth -> 
 	          auth.requestMatchers("/api/auth/**").permitAll()
 	              .requestMatchers("/api/friends/**").permitAll()
-<<<<<<< HEAD
 	              .requestMatchers("/post/**").permitAll()
-=======
 	              .requestMatchers("/api/requests/**").permitAll()
 	              .requestMatchers("/api/users/**").permitAll()
->>>>>>> 2eb0888288205edc00d1785a44c062a69b99e046
 	              .anyRequest().authenticated()
 	        );
 	    	
