@@ -18,4 +18,8 @@ public interface UserService {
 	
 	public List<User> findFriendForId(Long userId) throws UserException;
 	
+	public User updateProfile(User updatedUser, User existingUser)throws UserException;
+	
+	public int updatePassword(User updatedUser)throws UserException;
+	
 }
