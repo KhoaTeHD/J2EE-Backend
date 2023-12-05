@@ -8,14 +8,12 @@ public class JwtResponse {
 	private Long id;
 	private String gmail;
 	private String profileName;
-//	private List<String> roles;
 
 	public JwtResponse(String accessToken, Long id, String gmail, String profileName) {
 		this.token = accessToken;
 		this.id = id;
 		this.gmail = gmail;
 		this.profileName = profileName;
-		//		this.roles = roles;
 	}
 
 	public String getAccessToken() {
