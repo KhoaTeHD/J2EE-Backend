@@ -10,8 +10,6 @@ import java.util.stream.Collectors;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,7 +21,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.view.RedirectView;
 
 //import com.groupnine.mediasocial.entity.ERole;
 //import com.groupnine.mediasocial.entity.Role;
@@ -104,5 +101,8 @@ public class UserLoginSignupLogoutController {
 
 		return ResponseEntity.ok(new MessageResponse("Đăng ký thành công!"));
 	}
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8536bf40402a4b2ac5d1f72695a44f745b09fcfa
 }

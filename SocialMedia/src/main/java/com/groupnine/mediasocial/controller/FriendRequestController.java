@@ -27,6 +27,15 @@ public class FriendRequestController {
 	public ResponseEntity<List<FriendRequest>> getRequests(@PathVariable Long userId) throws UserException{
 		User user = userService.findUserById(userId);
 		
+		List<FriendRequest> requestList = user.getReceivedFriendRequest();
+		
+		for( FriendRequest fr : requestList) {
+			fr.getSender().setSentFriendRequest(null);
+			fr.getSender().setFriends(null);
+			fr.getSender().setReceivedFriendRequest(null);
+			fr.setReceiver(null);
+		}
+		
 		return new ResponseEntity<List<FriendRequest>>(user.getReceivedFriendRequest(), HttpStatus.OK);
 	}
 	
