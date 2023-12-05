@@ -78,6 +78,7 @@ public class UserServiceImplementation implements UserService {
 	public List<User> findFriendForId(Long userId) throws UserException {
 		Optional<User> user = userRepository.findById(userId);
 		List<User> frList = user.get().getFriends();
+		List<FriendRequest> requests = user.get().getSentFriendRequest();
 		
 		List<User> uList = userRepository.findAll();
 		uList.remove(user.get());
@@ -87,8 +88,13 @@ public class UserServiceImplementation implements UserService {
 				if(uList.contains(u)) {
 					uList.remove(u);
 				}
-				if(true) {
-					
+			}
+		}
+		
+		if(!requests.isEmpty()) {
+			for(FriendRequest fr : requests) {
+				if(uList.contains(fr.getReceiver())) {
+					uList.remove(fr.getReceiver());
 				}
 			}
 		}

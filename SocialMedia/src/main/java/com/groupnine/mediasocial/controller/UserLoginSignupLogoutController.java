@@ -101,8 +101,4 @@ public class UserLoginSignupLogoutController {
 
 		return ResponseEntity.ok(new MessageResponse("Đăng ký thành công!"));
 	}
-<<<<<<< HEAD
-
-=======
->>>>>>> 8536bf40402a4b2ac5d1f72695a44f745b09fcfa
 }
