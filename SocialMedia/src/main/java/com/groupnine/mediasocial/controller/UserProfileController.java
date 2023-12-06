@@ -1,14 +1,21 @@
 package com.groupnine.mediasocial.controller;
 
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,8 +26,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
 
 import com.groupnine.mediasocial.entity.User;
 import com.groupnine.mediasocial.exception.UserException;
@@ -40,6 +49,7 @@ public class UserProfileController {
 	
 	@Autowired
 	PasswordEncoder encoder;
+	
 	
 	@GetMapping("id/{id}")
 	public ResponseEntity<User> findUserByIdHandler(@PathVariable Long id) throws UserException{
@@ -89,62 +99,89 @@ public class UserProfileController {
 	}
 	
 	private static final String UPLOAD_DIRECTORY = "public/images/";
-
-    @PostMapping("/updateImage")
-    public ResponseEntity<?> updateImage(@RequestPart("avatar") MultipartFile avatar) throws IllegalStateException, java.io.IOException {
-
-        if (avatar != null && !avatar.isEmpty() && avatar.getContentType().startsWith("image/")) {
-            try {
-                String avatarFileName = avatar.getOriginalFilename();
-                String avatarFilePath = UPLOAD_DIRECTORY + avatarFileName;
-
-                File avatarFile = new File(avatarFilePath);
-                avatarFile.getParentFile().mkdirs();
-                avatar.transferTo(avatarFile);
-
-                // Update profile in the database with the new avatar file path and other information
-                // ...
-
-                return ResponseEntity.ok("Profile updated successfully");
-            } catch (IOException e) {
-                e.printStackTrace();
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred during profile update");
-            }
-        } else {
-            // Update profile in the database without changing the avatar
-            // ...
-
-            return ResponseEntity.ok("Profile updated successfully");
-        }
-    }
-    
-    private static final String IMAGE_DIRECTORY = "public/images/";
-
+	
     @PostMapping("/uploadImage")
-    public String uploadImage(@RequestParam("filePath") String filePath) throws java.io.IOException {
-        try {
-            File sourceFile = new File(filePath);
-            File destFile = new File(IMAGE_DIRECTORY + sourceFile.getName());
+    public ResponseEntity<?> uploadImage(@RequestPart("avatar") MultipartFile avatar) throws IllegalStateException, java.io.IOException {
+    	 try {
+    	        if (!avatar.isEmpty()) {
+    	            String fileName = avatar.getOriginalFilename();
+    	            File newFile = new File(UPLOAD_DIRECTORY + fileName);
+    	            
+    	            // Nếu dung lượng ảnh quá 10MB
+    	            if (avatar.getSize() > 10485760) { 
+    	                return ResponseEntity.badRequest().body("Dung lượng ảnh quá lớn không thể upload vui lòng chọn < 10MB.");
+    	            }
+    	            try (BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(newFile))) {
+    	                outputStream.write(avatar.getBytes());
+    	                outputStream.flush();
+    	            }
 
-            FileInputStream fileInputStream = new FileInputStream(sourceFile);
-            FileOutputStream fileOutputStream = new FileOutputStream(destFile);
+    	            String imageUrl = "http://localhost:8080/public/images/" + fileName; // Assuming your application is running on port 8080
 
-            byte[] buffer = new byte[1024];
-            int length;
+    	            return ResponseEntity.ok().body(imageUrl);
+    	        } else {
+    	            throw new Exception();
+    	        }
+    	    } catch (Exception e) {
+    	        e.printStackTrace();
+    	        return ResponseEntity.badRequest().build();
+    	    }
+    	 
+    }
 
-            while ((length = fileInputStream.read(buffer)) > 0) {
-                fileOutputStream.write(buffer, 0, length);
-            }
+    @GetMapping("/public/images/{imageName}")
+    public ResponseEntity<?> getImage(@PathVariable("imageName") String imageName) throws IOException, java.io.IOException {
+        File imageFile = new File(UPLOAD_DIRECTORY + imageName);
 
-            fileInputStream.close();
-            fileOutputStream.close();
-
-            return "File uploaded successfully!";
-        } catch (IOException e) {
-            e.printStackTrace();
-            return "File upload failed!";
+        if (imageFile.exists()) {
+            byte[] imageBytes = Files.readAllBytes(imageFile.toPath());
+            return ResponseEntity.ok()
+                    .contentType(MediaType.IMAGE_JPEG)
+                    .body(imageBytes);
+        } else {
+            return ResponseEntity.notFound().build();
         }
     }
+
+//    @GetMapping("/public/images/{imageName}")
+//    public ResponseEntity<?> getImage(@PathVariable("avatar") String avatar) throws IOException, java.io.IOException {
+//        File imageFile = new File(UPLOAD_DIRECTORY + avatar);
+//
+//        if (imageFile.exists()) {
+//            byte[] imageBytes = Files.readAllBytes(imageFile.toPath());
+//            return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imageBytes);
+//        } else {
+//            return ResponseEntity.notFound().build();
+//        }
+//    }
+    
+//    private static final String IMAGE_DIRECTORY = "public/images/";
+//
+//    @PostMapping("/uploadImage")
+//    public String uploadImage(@RequestParam("filePath") String filePath) throws java.io.IOException {
+//        try {
+//            File sourceFile = new File(filePath);
+//            File destFile = new File(IMAGE_DIRECTORY + sourceFile.getName());
+//
+//            FileInputStream fileInputStream = new FileInputStream(sourceFile);
+//            FileOutputStream fileOutputStream = new FileOutputStream(destFile);
+//
+//            byte[] buffer = new byte[1024];
+//            int length;
+//
+//            while ((length = fileInputStream.read(buffer)) > 0) {
+//                fileOutputStream.write(buffer, 0, length);
+//            }
+//
+//            fileInputStream.close();
+//            fileOutputStream.close();
+//
+//            return "File uploaded successfully!";
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            return "File upload failed!";
+//        }
+//    }
 	
 //	@GetMapping("numPost/{id}")
 //	public int getNumPost(@PathVariable Long id) throws UserException{
