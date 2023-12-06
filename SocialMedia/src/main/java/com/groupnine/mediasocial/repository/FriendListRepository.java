@@ -10,6 +10,6 @@ import com.groupnine.mediasocial.entity.FriendList;
 @Repository
 public interface FriendListRepository extends JpaRepository<FriendList, Long> {
 	
-	@Query(value = "SELECT * from friendlist f where f.user_id = :userid and f.friend_id = :friendid ", nativeQuery = true)
+	@Query(value = "SELECT * from friendlist f where f.user_id = :userid and f.friend_id = :friendid", nativeQuery = true)
 	public FriendList findByUserIdAndFriendId(@Param("userid")Long userId,@Param("friendid") Long friendId);
 }

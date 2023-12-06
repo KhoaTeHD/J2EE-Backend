@@ -78,6 +78,7 @@ public class UserServiceImplementation implements UserService {
 	public List<User> findFriendForId(Long userId) throws UserException {
 		Optional<User> user = userRepository.findById(userId);
 		List<User> frList = user.get().getFriends();
+		List<FriendRequest> requests = user.get().getSentFriendRequest();
 		
 		List<User> uList = userRepository.findAll();
 		uList.remove(user.get());
@@ -87,8 +88,13 @@ public class UserServiceImplementation implements UserService {
 				if(uList.contains(u)) {
 					uList.remove(u);
 				}
-				if(true) {
-					
+			}
+		}
+		
+		if(!requests.isEmpty()) {
+			for(FriendRequest fr : requests) {
+				if(uList.contains(fr.getReceiver())) {
+					uList.remove(fr.getReceiver());
 				}
 			}
 		}
@@ -112,5 +118,47 @@ public class UserServiceImplementation implements UserService {
 		}
 
 		return uList;
+	}
+
+	@Override
+	public User updateProfile(User updatedUser, User existingUser) throws UserException {
+		int change = 0;
+		
+		if(updatedUser.getAvatar()!= existingUser.getAvatar()) {
+			existingUser.setAvatar(updatedUser.getAvatar());
+			change = 1;
+		}
+		
+		if(updatedUser.getProfileName()!= existingUser.getProfileName()) {
+			existingUser.setProfileName(updatedUser.getProfileName());
+			change = 1;
+		}
+		
+		if(updatedUser.getBirthday()!= existingUser.getBirthday()) {
+			existingUser.setBirthday(updatedUser.getBirthday());
+			change = 1;
+		}
+		
+		if(updatedUser.getBiography()!= existingUser.getBiography()) {
+			existingUser.setBiography(updatedUser.getBiography());
+			change = 1;
+		}
+		
+		if(updatedUser.getGender()!= existingUser.getGender()) {
+			existingUser.setGender(updatedUser.getGender());
+			change = 1;
+		}
+		
+		if(change == 1) {
+			return userRepository.save(existingUser);
+		}
+		
+		throw new UserException("You can't update this user");
+	}
+
+	@Override
+	public int updatePassword(User updatedUser) throws UserException {
+		User result = userRepository.save(updatedUser);
+		return result != null ? 1 : 0;
 	}
 }

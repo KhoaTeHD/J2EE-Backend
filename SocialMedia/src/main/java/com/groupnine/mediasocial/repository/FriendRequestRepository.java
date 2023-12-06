@@ -9,6 +9,6 @@ import com.groupnine.mediasocial.entity.FriendRequest;
 @Repository
 public interface FriendRequestRepository extends JpaRepository<FriendRequest, Long> {
 	
-	@Query(value = "SELECT * from friendrequest fr where fr.user_id = :senderId or fr.friend_id = :receiverId ", nativeQuery = true)
+	@Query(value = "SELECT * from friendrequest fr where fr.receiver = :receiverId and fr.sender = :senderId ", nativeQuery = true)
 	public FriendRequest findBySenderIdOrReceiverId(Long senderId, Long receiverId);
 }
