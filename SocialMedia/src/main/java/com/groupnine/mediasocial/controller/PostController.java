@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.groupnine.mediasocial.entity.Comment;
 import com.groupnine.mediasocial.entity.Media;
 import com.groupnine.mediasocial.entity.Post;
 import com.groupnine.mediasocial.entity.User;
@@ -35,22 +36,75 @@ public class PostController {
 	@Autowired
 	MediaService mediaService;
 	
-//	@GetMapping("/recomment/{userId}")
-//	public ResponseEntity<List<Post>> getRecommentPost(@PathVariable Long userId) {
-//		User user = postService.findUserById(userId);
-//		
-//		return new ResponseEntity<List<Post>>(,HttpStatus.OK);
-//	}
+	@GetMapping("/recomment/{userId}")
+	public ResponseEntity<List<Post>> getRecommentPost(@PathVariable Long userId){
+		List<Post> listPost = postService.getPostsOfFriends(userId);
+		for (Post post : listPost) {
+			
+			post.getUser().setComments(null);
+			post.getUser().setFriends(null);
+			//post.getUser().setLikes(null);
+			post.getUser().setReceivedFriendRequest(null);
+			post.getUser().setSentFriendRequest(null);
+			
+			post.setShared(null);
+			
+			List<Comment> listComment = post.getComments();
+			
+			for (Comment comment: listComment) {
+				comment.getUser().setComments(null);
+				comment.getUser().setFriends(null);
+				comment.getUser().setLikes(null);
+				comment.getUser().setReceivedFriendRequest(null);
+				comment.getUser().setSentFriendRequest(null);
+				
+				comment.getPost().setComments(null);
+				comment.getPost().setLikes(null);
+				comment.getPost().setMedia(null);
+				comment.getPost().setShared(null);
+				//comment.getPost().setUser(null);
+			}
+		}
+		return new ResponseEntity<List<Post>>(listPost, HttpStatus.OK);
+	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<?> findPostById(@PathVariable Long id) throws PostException{
-		return new ResponseEntity<>(postService.findPostById(id), HttpStatus.OK);
+		
+		Post post = postService.findPostById(id);
+		
+		post.getUser().setComments(null);
+		post.getUser().setFriends(null);
+		post.getUser().setLikes(null);
+		post.getUser().setReceivedFriendRequest(null);
+		post.getUser().setSentFriendRequest(null);
+		
+		post.setShared(null);
+		
+		List<Comment> listComment = post.getComments();
+		
+		for (Comment comment: listComment) {
+			comment.getUser().setComments(null);
+			comment.getUser().setFriends(null);
+			comment.getUser().setLikes(null);
+			comment.getUser().setReceivedFriendRequest(null);
+			comment.getUser().setSentFriendRequest(null);
+			
+			//comment.getPost().setComments(null);
+			//comment.getPost().setLikes(null);
+			//comment.getPost().setMedia(null);
+			//comment.getPost().setShared(null);
+			//comment.getPost().setUser(null);
+			comment.setPost(null);
+		}
+		
+		return new ResponseEntity<>(post, HttpStatus.OK);
 	}
 	
 	@PostMapping("/newpost")
 	public Post savePost(@Valid @RequestBody Post post) { 
 		List<Media> listMedia = post.getMedia();
-		if (listMedia.size() > 0) {
+		if (listMedia != null) {
 			for (Media media : listMedia) {
 				mediaService.saveMedia(media);
 			}

@@ -25,7 +25,12 @@ public class UserController {
 	@GetMapping("id/{id}")
 	public ResponseEntity<User> findUserByIdHandler(@PathVariable Long id) throws UserException{
 		User user = userService.findUserById(id);
-		
+		user.setFriends(null);
+		user.setReceivedFriendRequest(null);
+		user.setSentFriendRequest(null);
+		user.setLikes(null);
+		user.setComments(null);
+		user.setShared(null);
 		return new ResponseEntity<User>(user,HttpStatus.OK);
 	}
 	

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 D:\SGU_course\J2EE\MediaSocial\Backend\J2EE-Backend\SocialMedia\src\main\java\com\groupnine\mediasocial\controller\PostController.java
 D:\SGU_course\J2EE\MediaSocial\Backend\J2EE-Backend\SocialMedia\src\main\java\com\groupnine\mediasocial\service\UserServiceImplementation.java
 D:\SGU_course\J2EE\MediaSocial\Backend\J2EE-Backend\SocialMedia\src\main\java\com\groupnine\mediasocial\controller\FriendRequestController.java
@@ -42,39 +41,3 @@ D:\SGU_course\J2EE\MediaSocial\Backend\J2EE-Backend\SocialMedia\src\main\java\co
 D:\SGU_course\J2EE\MediaSocial\Backend\J2EE-Backend\SocialMedia\src\main\java\com\groupnine\mediasocial\repository\MediaRepository.java
 D:\SGU_course\J2EE\MediaSocial\Backend\J2EE-Backend\SocialMedia\src\main\java\com\groupnine\mediasocial\entity\FriendList.java
 D:\SGU_course\J2EE\MediaSocial\Backend\J2EE-Backend\SocialMedia\src\main\java\com\groupnine\mediasocial\service\IMediaService.java
-=======
-C:\Users\Khoa\Desktop\git\J2EE-Backend\SocialMedia\src\main\java\com\groupnine\mediasocial\repository\UserRepository.java
-C:\Users\Khoa\Desktop\git\J2EE-Backend\SocialMedia\src\main\java\com\groupnine\mediasocial\entity\Media.java
-C:\Users\Khoa\Desktop\git\J2EE-Backend\SocialMedia\src\main\java\com\groupnine\mediasocial\payload\response\JwtResponse.java
-C:\Users\Khoa\Desktop\git\J2EE-Backend\SocialMedia\src\main\java\com\groupnine\mediasocial\entity\FriendList.java
-C:\Users\Khoa\Desktop\git\J2EE-Backend\SocialMedia\src\main\java\com\groupnine\mediasocial\exception\ErrorDetails.java
-C:\Users\Khoa\Desktop\git\J2EE-Backend\SocialMedia\src\main\java\com\groupnine\mediasocial\service\FriendRequestService.java
-C:\Users\Khoa\Desktop\git\J2EE-Backend\SocialMedia\src\main\java\com\groupnine\mediasocial\controller\UserLoginSignupLogoutController.java
-C:\Users\Khoa\Desktop\git\J2EE-Backend\SocialMedia\src\main\java\com\groupnine\mediasocial\exception\GlobleExceptions.java
-C:\Users\Khoa\Desktop\git\J2EE-Backend\SocialMedia\src\main\java\com\groupnine\mediasocial\payload\request\LoginRequest.java
-C:\Users\Khoa\Desktop\git\J2EE-Backend\SocialMedia\src\main\java\com\groupnine\mediasocial\service\UserService.java
-C:\Users\Khoa\Desktop\git\J2EE-Backend\SocialMedia\src\main\java\com\groupnine\mediasocial\service\UserServiceImplementation.java
-C:\Users\Khoa\Desktop\git\J2EE-Backend\SocialMedia\src\main\java\com\groupnine\mediasocial\MediasocialApplication.java
-C:\Users\Khoa\Desktop\git\J2EE-Backend\SocialMedia\src\main\java\com\groupnine\mediasocial\repository\FriendRequestRepository.java
-C:\Users\Khoa\Desktop\git\J2EE-Backend\SocialMedia\src\main\java\com\groupnine\mediasocial\entity\Comment.java
-C:\Users\Khoa\Desktop\git\J2EE-Backend\SocialMedia\src\main\java\com\groupnine\mediasocial\service\UserDetailsServiceImpl.java
-C:\Users\Khoa\Desktop\git\J2EE-Backend\SocialMedia\src\main\java\com\groupnine\mediasocial\payload\response\MessageResponse.java
-C:\Users\Khoa\Desktop\git\J2EE-Backend\SocialMedia\src\main\java\com\groupnine\mediasocial\security\jwt\AuthTokenFilter.java
-C:\Users\Khoa\Desktop\git\J2EE-Backend\SocialMedia\src\main\java\com\groupnine\mediasocial\entity\Post.java
-C:\Users\Khoa\Desktop\git\J2EE-Backend\SocialMedia\src\main\java\com\groupnine\mediasocial\security\jwt\AuthEntryPointJwt.java
-C:\Users\Khoa\Desktop\git\J2EE-Backend\SocialMedia\src\main\java\com\groupnine\mediasocial\security\jwt\JwtUtils.java
-C:\Users\Khoa\Desktop\git\J2EE-Backend\SocialMedia\src\main\java\com\groupnine\mediasocial\controller\FriendListController.java
-C:\Users\Khoa\Desktop\git\J2EE-Backend\SocialMedia\src\main\java\com\groupnine\mediasocial\repository\FriendListRepository.java
-C:\Users\Khoa\Desktop\git\J2EE-Backend\SocialMedia\src\main\java\com\groupnine\mediasocial\entity\Share.java
-C:\Users\Khoa\Desktop\git\J2EE-Backend\SocialMedia\src\main\java\com\groupnine\mediasocial\entity\FriendRequest.java
-C:\Users\Khoa\Desktop\git\J2EE-Backend\SocialMedia\src\main\java\com\groupnine\mediasocial\service\UserDetailsImpl.java
-C:\Users\Khoa\Desktop\git\J2EE-Backend\SocialMedia\src\main\java\com\groupnine\mediasocial\entity\Reaction.java
-C:\Users\Khoa\Desktop\git\J2EE-Backend\SocialMedia\src\main\java\com\groupnine\mediasocial\entity\User.java
-C:\Users\Khoa\Desktop\git\J2EE-Backend\SocialMedia\src\main\java\com\groupnine\mediasocial\service\FriendListService.java
-C:\Users\Khoa\Desktop\git\J2EE-Backend\SocialMedia\src\main\java\com\groupnine\mediasocial\payload\request\SignupRequest.java
-C:\Users\Khoa\Desktop\git\J2EE-Backend\SocialMedia\src\main\java\com\groupnine\mediasocial\controller\UserController.java
-C:\Users\Khoa\Desktop\git\J2EE-Backend\SocialMedia\src\main\java\com\groupnine\mediasocial\exception\UserException.java
-C:\Users\Khoa\Desktop\git\J2EE-Backend\SocialMedia\src\main\java\com\groupnine\mediasocial\security\WebSecurityConfig.java
-C:\Users\Khoa\Desktop\git\J2EE-Backend\SocialMedia\src\main\java\com\groupnine\mediasocial\controller\FriendRequestController.java
-C:\Users\Khoa\Desktop\git\J2EE-Backend\SocialMedia\src\main\java\com\groupnine\mediasocial\service\FriendListImpl.java
->>>>>>> 2eb0888288205edc00d1785a44c062a69b99e046

@@ -3,6 +3,9 @@ package com.groupnine.mediasocial.entity;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,6 +25,7 @@ public class Post {
 	private long postId;
 	
 	@Column(nullable = false)
+	@JsonFormat(pattern="yyyy-MM-dd' 'HH:mm:ss")
     private Date createdDate;
 
     @Column(length = 300)
@@ -98,6 +102,12 @@ public class Post {
 	public void setComments(List<Comment> comments) {
 		this.comments = comments;
 	}
-    
-    
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 }

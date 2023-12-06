@@ -64,6 +64,7 @@ public class WebSecurityConfig {
 	          auth.requestMatchers("/api/auth/**").permitAll()
 	              .requestMatchers("/api/friends/**").permitAll()
 	              .requestMatchers("/post/**").permitAll()
+	              .requestMatchers("/recomment/**").permitAll()
 	              .requestMatchers("/api/requests/**").permitAll()
 	              .requestMatchers("/api/users/**").permitAll()
 	              .anyRequest().authenticated()
