@@ -80,6 +80,7 @@ public class UserLoginSignupLogoutController {
 
 	@PostMapping("/signup")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
+		
 		Optional<User> userCheck = userRepository.existsByGmail(signUpRequest.getGmail());
 		if (!userCheck.isEmpty()) {
 			return ResponseEntity.badRequest().body(new MessageResponse("Error: Gmail này đã tồn tại!"));
@@ -101,8 +102,5 @@ public class UserLoginSignupLogoutController {
 
 		return ResponseEntity.ok(new MessageResponse("Đăng ký thành công!"));
 	}
-<<<<<<< HEAD
 
-=======
->>>>>>> 8536bf40402a4b2ac5d1f72695a44f745b09fcfa
 }
