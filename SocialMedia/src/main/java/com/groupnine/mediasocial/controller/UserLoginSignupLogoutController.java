@@ -44,9 +44,6 @@ public class UserLoginSignupLogoutController {
 	@Autowired
 	UserRepository userRepository;
 
-//	  @Autowired
-//	  RoleRepository roleRepository;
-
 	@Autowired
 	PasswordEncoder encoder;
 
@@ -68,9 +65,6 @@ public class UserLoginSignupLogoutController {
 				String jwt = jwtUtils.generateJwtToken(authentication);
 
 				UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-//	    	    List<String> roles = userDetails.getAuthorities().stream()
-//	    	        .map(item -> item.getAuthority())
-//	    	        .collect(Collectors.toList());
 				return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUserid(), userDetails.getGmail(),
 						userDetails.getProfile_name()));
 			} else {
@@ -86,6 +80,7 @@ public class UserLoginSignupLogoutController {
 
 	@PostMapping("/signup")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
+
 		Optional<User> userCheck = userRepository.existsByGmail(signUpRequest.getGmail());
 		if (!userCheck.isEmpty()) {
 			return ResponseEntity.badRequest().body(new MessageResponse("Error: Gmail này đã tồn tại!"));
@@ -102,31 +97,7 @@ public class UserLoginSignupLogoutController {
 		User user = new User(signUpRequest.getGmail(), encoder.encode(signUpRequest.getPassword()),
 				signUpRequest.getProfileName(), signupDate);
 
-//	    Set<String> strRoles = signUpRequest.getRole();
-//	    Set<Role> roles = new HashSet<>();
-//
-//	    if (strRoles == null) {
-//	      Role userRole = roleRepository.findByName(ERole.ROLE_USER.toString())
-//	          .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-//	      roles.add(userRole);
-//	    } else {
-//	      strRoles.forEach(role -> {
-//	        switch (role) {
-//	        case "admin":
-//	          Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN.toString())
-//	              .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-//	          roles.add(adminRole);
-//
-//	          break;
-//	        default:
-//	          Role userRole = roleRepository.findByName(ERole.ROLE_USER.toString())
-//	              .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-//	          roles.add(userRole);
-//	        }
-//	      });
-//	    }
 
-//	    user.setRoles(roles);
 		userRepository.save(user);
 
 		return ResponseEntity.ok(new MessageResponse("Đăng ký thành công!"));

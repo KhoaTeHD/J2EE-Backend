@@ -61,15 +61,18 @@ public class WebSecurityConfig {
 	        .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
 	        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 	        .authorizeHttpRequests(auth -> 
-	          auth.requestMatchers("/api/auth/**").permitAll()
+	          auth.requestMatchers("/public/images/**").permitAll()
+          		  .requestMatchers("/api/auth/**").permitAll()
 	              .requestMatchers("/api/friends/**").permitAll()
+	              .requestMatchers("/api/userProfile/**").permitAll()
 	              .requestMatchers("/post/**").permitAll()
 	              .requestMatchers("/recomment/**").permitAll()
 	              .requestMatchers("/api/requests/**").permitAll()
 	              .requestMatchers("/api/users/**").permitAll()
+	              .requestMatchers("/cloudinary/**").permitAll()
 	              .anyRequest().authenticated()
 	        );
-	    	
+
 	    http.authenticationProvider(authenticationProvider());
 
 	    http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
