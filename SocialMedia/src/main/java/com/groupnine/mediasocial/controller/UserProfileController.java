@@ -45,7 +45,11 @@ public class UserProfileController {
 	public ResponseEntity<User> findUserByIdHandler(@PathVariable Long id) throws UserException{
 		User user = userService.findUserById(id);
 		user.setFriends(null);
-		
+		user.setSentFriendRequest(null);
+		user.setComments(null);
+		user.setReceivedFriendRequest(null);
+		user.setShared(null);
+		user.setLikes(null);
 		return new ResponseEntity<User>(user,HttpStatus.OK);
 	}
 	
@@ -87,64 +91,6 @@ public class UserProfileController {
 			return result == 1 ? new ResponseEntity<> ("103", HttpStatus.OK) : new ResponseEntity<> ("104", HttpStatus.OK);
 		}
 	}
-	
-	private static final String UPLOAD_DIRECTORY = "public/images/";
-
-    @PostMapping("/updateImage")
-    public ResponseEntity<?> updateImage(@RequestPart("avatar") MultipartFile avatar) throws IllegalStateException, java.io.IOException {
-
-        if (avatar != null && !avatar.isEmpty() && avatar.getContentType().startsWith("image/")) {
-            try {
-                String avatarFileName = avatar.getOriginalFilename();
-                String avatarFilePath = UPLOAD_DIRECTORY + avatarFileName;
-
-                File avatarFile = new File(avatarFilePath);
-                avatarFile.getParentFile().mkdirs();
-                avatar.transferTo(avatarFile);
-
-                // Update profile in the database with the new avatar file path and other information
-                // ...
-
-                return ResponseEntity.ok("Profile updated successfully");
-            } catch (IOException e) {
-                e.printStackTrace();
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred during profile update");
-            }
-        } else {
-            // Update profile in the database without changing the avatar
-            // ...
-
-            return ResponseEntity.ok("Profile updated successfully");
-        }
-    }
-    
-    private static final String IMAGE_DIRECTORY = "public/images/";
-
-    @PostMapping("/uploadImage")
-    public String uploadImage(@RequestParam("filePath") String filePath) throws java.io.IOException {
-        try {
-            File sourceFile = new File(filePath);
-            File destFile = new File(IMAGE_DIRECTORY + sourceFile.getName());
-
-            FileInputStream fileInputStream = new FileInputStream(sourceFile);
-            FileOutputStream fileOutputStream = new FileOutputStream(destFile);
-
-            byte[] buffer = new byte[1024];
-            int length;
-
-            while ((length = fileInputStream.read(buffer)) > 0) {
-                fileOutputStream.write(buffer, 0, length);
-            }
-
-            fileInputStream.close();
-            fileOutputStream.close();
-
-            return "File uploaded successfully!";
-        } catch (IOException e) {
-            e.printStackTrace();
-            return "File upload failed!";
-        }
-    }
 	
 //	@GetMapping("numPost/{id}")
 //	public int getNumPost(@PathVariable Long id) throws UserException{
