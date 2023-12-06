@@ -33,7 +33,8 @@ public class CloudinaryService {
     public Map delete(String url)  {
         try{
         	String[] s = url.split("/");
-        	String public_id = s[s.length-2] + "/" + s[s.length-1];
+        	String public_id = s[s.length-2] + "/" + s[s.length-1].split("\\.")[0];
+        	
             Map data = this.cloudinary.uploader().destroy(public_id , Map.of());
             
             return data;

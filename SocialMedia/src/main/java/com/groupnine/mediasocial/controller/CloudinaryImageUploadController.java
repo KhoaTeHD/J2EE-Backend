@@ -29,8 +29,8 @@ public class CloudinaryImageUploadController {
         return new ResponseEntity<>(data, HttpStatus.OK);
     }
     
-    @PostMapping("/delete/{url}")
-    public ResponseEntity<Map> deleteImage(@PathVariable String url){
+    @PostMapping("/delete")
+    public ResponseEntity<Map> deleteImage(@RequestParam("url") String url){
         Map data = this.cloudinaryService.delete(url);
         return new ResponseEntity<>(data, HttpStatus.OK);
     }
