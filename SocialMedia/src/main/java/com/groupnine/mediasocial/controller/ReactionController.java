@@ -39,9 +39,9 @@ public class ReactionController {
 		return "Deleted";
 	}
 	
-//	@GetMapping("/check")
-//    public ResponseEntity<Boolean> checkReaction(@RequestParam Long userId, @RequestParam Long postId) {
-//        Optional<Reaction> reaction = reactionService.findByUserIdAndPostId(userId, postId);
-//        return ResponseEntity.ok(reaction.isPresent());
-//    }
+	@GetMapping("/check")
+    public ResponseEntity<Boolean> checkReaction(@RequestParam Long userId, @RequestParam Long postId) {
+        Optional<Reaction> reaction = reactionService.findByUserIdAndPostId(userId, postId);
+        return ResponseEntity.ok(reaction.isPresent());
+    }
 }

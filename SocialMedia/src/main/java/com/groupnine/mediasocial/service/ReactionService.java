@@ -1,5 +1,7 @@
 package com.groupnine.mediasocial.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,5 +23,11 @@ public class ReactionService implements IReactionService{
 	public void deleteReaction(long reactionID) {
 		reactionRepository.deleteById(reactionID);
 	}
+
+	@Override
+	public Optional<Reaction> findByUserIdAndPostId(Long userId, Long postId) {
+		return reactionRepository.findByUserIdAndPostId(userId, postId);
+	}
+
 
 }
