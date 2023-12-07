@@ -87,7 +87,8 @@ public class PostController {
 		}
 		return new ResponseEntity<List<Post>>(listPost, HttpStatus.OK);
 	}
-@GetMapping("/{id}")
+	
+	@GetMapping("/{id}")
 	public ResponseEntity<?> findPostById(@PathVariable Long id) throws PostException{
 		
 		Post post = postService.findPostById(id);
@@ -127,6 +128,11 @@ public class PostController {
 		for (Reaction reaction : listReaction) {
 			reaction.setPost(null);
 			reaction.getUser().setPosts(null);
+			reaction.getUser().setFriends(null);
+			reaction.getUser().setComments(null);
+			reaction.getUser().setLikes(null);
+			reaction.getUser().setReceivedFriendRequest(null);
+			reaction.getUser().setSentFriendRequest(null);
 		}
 		
 		return new ResponseEntity<>(post, HttpStatus.OK);
@@ -134,12 +140,6 @@ public class PostController {
 	
 	@PostMapping("/newpost")
 	public Post savePost(@Valid @RequestBody Post post) { 
-//		List<Media> listMedia = post.getMedia();
-//		if (listMedia != null) {
-//			for (Media media : listMedia) {
-//				mediaService.saveMedia(media);
-//			}
-//		}
 		
         return postService.savePost(post); 
     }
