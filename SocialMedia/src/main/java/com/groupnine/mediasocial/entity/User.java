@@ -63,8 +63,8 @@ public class User {
     
     @OneToMany(mappedBy = "user")
     private List<Post> posts;
-    
-    @OneToMany(mappedBy = "user")
+
+	@OneToMany(mappedBy = "user")
     private List<Share> shared;
     
     @OneToMany(mappedBy = "user")
@@ -203,6 +203,14 @@ public class User {
 
 	public void setComments(List<Comment> comments) {
 		this.comments = comments;
+	}
+	
+	 public List<Post> getPosts() {
+			return posts;
+	}
+
+	public void setPosts(List<Post> posts) {
+		this.posts = posts;
 	}
     
 }
