@@ -38,6 +38,7 @@ public class FriendListController {
 			u.setFriends(null);
 			u.setReceivedFriendRequest(null);
 			u.setSentFriendRequest(null);
+			u.setComments(null);
 		}
 		
 		return new ResponseEntity<List<User>>(user.getFriends(),HttpStatus.OK);

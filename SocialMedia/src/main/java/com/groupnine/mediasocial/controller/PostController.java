@@ -50,6 +50,7 @@ public class PostController {
 			post.setShared(null);
 			
 			List<Comment> listComment = post.getComments();
+			List<Media> listMedia = post.getMedia();
 			
 			for (Comment comment: listComment) {
 				comment.getUser().setComments(null);
@@ -64,6 +65,11 @@ public class PostController {
 				comment.getPost().setShared(null);
 				//comment.getPost().setUser(null);
 			}
+			
+			for (Media media : listMedia) {
+				media.setPostid(null);
+			}
+			
 		}
 		return new ResponseEntity<List<Post>>(listPost, HttpStatus.OK);
 	}
@@ -82,6 +88,7 @@ public class PostController {
 		post.setShared(null);
 		
 		List<Comment> listComment = post.getComments();
+		List<Media> listMedia = post.getMedia();
 		
 		for (Comment comment: listComment) {
 			comment.getUser().setComments(null);
@@ -98,17 +105,21 @@ public class PostController {
 			comment.setPost(null);
 		}
 		
+		for (Media media : listMedia) {
+			media.setPostid(null);
+		}
+		
 		return new ResponseEntity<>(post, HttpStatus.OK);
 	}
 	
 	@PostMapping("/newpost")
 	public Post savePost(@Valid @RequestBody Post post) { 
-		List<Media> listMedia = post.getMedia();
-		if (listMedia != null) {
-			for (Media media : listMedia) {
-				mediaService.saveMedia(media);
-			}
-		}
+//		List<Media> listMedia = post.getMedia();
+//		if (listMedia != null) {
+//			for (Media media : listMedia) {
+//				mediaService.saveMedia(media);
+//			}
+//		}
 		
         return postService.savePost(post); 
     }
