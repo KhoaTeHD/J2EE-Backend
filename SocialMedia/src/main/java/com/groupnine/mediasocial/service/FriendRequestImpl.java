@@ -3,6 +3,7 @@ package com.groupnine.mediasocial.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.groupnine.mediasocial.controller.NotificationController;
 import com.groupnine.mediasocial.entity.FriendRequest;
 import com.groupnine.mediasocial.entity.User;
 import com.groupnine.mediasocial.exception.UserException;
@@ -19,6 +20,9 @@ public class FriendRequestImpl implements FriendRequestService {
 	
 	@Autowired
 	private FriendListService flService;
+	
+	@Autowired
+	private NotificationController notify;
 
 	@Override
 	public boolean saveRequest(Long sender, Long receiver) throws UserException {
@@ -33,6 +37,7 @@ public class FriendRequestImpl implements FriendRequestService {
 			}
 		}
 		
+		
 		FriendRequest fr = new FriendRequest();
 		fr.setSender(send);
 		fr.setReceiver(receive);
@@ -42,6 +47,8 @@ public class FriendRequestImpl implements FriendRequestService {
 		} catch (Exception e) {
 			return false;
 		}
+		
+		notify.sendNotification(receiver.toString());
 		return true;
 	}
 
