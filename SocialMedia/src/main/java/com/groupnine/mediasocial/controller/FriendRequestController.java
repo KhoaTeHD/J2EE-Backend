@@ -40,6 +40,8 @@ public class FriendRequestController {
 			fr.getSender().setSentFriendRequest(null);
 			fr.getSender().setFriends(null);
 			fr.getSender().setReceivedFriendRequest(null);
+			fr.getSender().setComments(null);
+			fr.getSender().setPosts(null);
 			fr.setReceiver(null);
 		}
 		

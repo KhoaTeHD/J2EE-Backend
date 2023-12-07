@@ -2,6 +2,7 @@ package com.groupnine.mediasocial.controller;
 
 import java.util.List;
 
+import org.apache.catalina.startup.ClassLoaderFactory.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,11 +46,12 @@ public class PostController {
 			try {
 				post.getUser().setComments(null);
 				post.getUser().setFriends(null);
-				//post.getUser().setLikes(null);
+				post.getUser().setLikes(null);
 				post.getUser().setReceivedFriendRequest(null);
 				post.getUser().setSentFriendRequest(null);
 				
 				post.setShared(null);
+				post.getUser().setPosts(null);
 				
 				List<Comment> listComment = post.getComments();
 				
@@ -76,6 +78,7 @@ public class PostController {
 				List<Reaction> listReaction = post.getLikes();
 				for (Reaction reaction : listReaction) {
 					reaction.setPost(null);
+					reaction.getUser().setPosts(null);
 				}
 			}
 			catch (Exception e) {
@@ -84,8 +87,7 @@ public class PostController {
 		}
 		return new ResponseEntity<List<Post>>(listPost, HttpStatus.OK);
 	}
-	
-	@GetMapping("/{id}")
+@GetMapping("/{id}")
 	public ResponseEntity<?> findPostById(@PathVariable Long id) throws PostException{
 		
 		Post post = postService.findPostById(id);
@@ -95,6 +97,7 @@ public class PostController {
 		post.getUser().setLikes(null);
 		post.getUser().setReceivedFriendRequest(null);
 		post.getUser().setSentFriendRequest(null);
+		post.getUser().setPosts(null);
 		
 		post.setShared(null);
 		
@@ -107,7 +110,7 @@ public class PostController {
 			comment.getUser().setLikes(null);
 			comment.getUser().setReceivedFriendRequest(null);
 			comment.getUser().setSentFriendRequest(null);
-			
+			comment.getUser().setPosts(null);
 			//comment.getPost().setComments(null);
 			//comment.getPost().setLikes(null);
 			//comment.getPost().setMedia(null);
@@ -123,6 +126,7 @@ public class PostController {
 		List<Reaction> listReaction = post.getLikes();
 		for (Reaction reaction : listReaction) {
 			reaction.setPost(null);
+			reaction.getUser().setPosts(null);
 		}
 		
 		return new ResponseEntity<>(post, HttpStatus.OK);
@@ -160,5 +164,6 @@ public class PostController {
 	@PutMapping("/{id}") 
     public Post updatePost(@RequestBody Post post, @PathVariable("id") long postId) { 
         return postService.updatePost(post, postId); 
-    } 
+    }
+	
 }

@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,6 +27,8 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.groupnine.mediasocial.entity.Comment;
+import com.groupnine.mediasocial.entity.Post;
 import com.groupnine.mediasocial.entity.User;
 import com.groupnine.mediasocial.exception.UserException;
 import com.groupnine.mediasocial.payload.request.UserChangePasswordRequest;
@@ -54,6 +57,13 @@ public class UserProfileController {
 		user.setReceivedFriendRequest(null);
 		user.setShared(null);
 		user.setLikes(null);
+		for (Post post : user.getPosts()) {
+			post.setUser(null);
+			post.setMedia(null);
+			post.setComments(null);
+			post.setLikes(null);
+		}
+		
 		return new ResponseEntity<User>(user,HttpStatus.OK);
 	}
 	
@@ -96,11 +106,11 @@ public class UserProfileController {
 		}
 	}
 	
-//	@GetMapping("numPost/{id}")
-//	public int getNumPost(@PathVariable Long id) throws UserException{
-//		User user = userService.findUserById(id);
-//		
-//		
-//	}
+	@GetMapping("numPost/{id}")
+	public int getNumPost(@PathVariable Long id) throws UserException{
+		User user = userService.findUserById(id);
+		
+		return user.getPosts().size();
+	}
 
 }
