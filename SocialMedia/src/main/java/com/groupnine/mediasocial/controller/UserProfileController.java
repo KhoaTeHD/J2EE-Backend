@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.groupnine.mediasocial.entity.Comment;
 import com.groupnine.mediasocial.entity.Post;
 import com.groupnine.mediasocial.entity.User;
 import com.groupnine.mediasocial.exception.UserException;
@@ -59,7 +60,9 @@ public class UserProfileController {
 		for (Post post : user.getPosts()) {
 			post.setUser(null);
 			post.setMedia(null);
+			post.setComments(null);
 		}
+		
 		return new ResponseEntity<User>(user,HttpStatus.OK);
 	}
 	
