@@ -111,6 +111,7 @@ public class PostController {
 			comment.getUser().setLikes(null);
 			comment.getUser().setReceivedFriendRequest(null);
 			comment.getUser().setSentFriendRequest(null);
+			comment.getUser().setPosts(null);
 			
 			//comment.getPost().setComments(null);
 			//comment.getPost().setLikes(null);
