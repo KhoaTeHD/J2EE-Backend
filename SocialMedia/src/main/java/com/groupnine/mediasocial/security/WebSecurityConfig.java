@@ -72,6 +72,7 @@ public class WebSecurityConfig {
 	              .requestMatchers("/api/users/**").permitAll()
 	              .requestMatchers("/cloudinary/**").permitAll()
 	              .requestMatchers("/media/**").permitAll()
+	              .requestMatchers("/comment/**").permitAll()
 	              .anyRequest().authenticated()
 	        );
 
