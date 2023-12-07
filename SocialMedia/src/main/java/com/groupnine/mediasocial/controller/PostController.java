@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.groupnine.mediasocial.entity.Comment;
 import com.groupnine.mediasocial.entity.Media;
 import com.groupnine.mediasocial.entity.Post;
+import com.groupnine.mediasocial.entity.Reaction;
 import com.groupnine.mediasocial.entity.User;
 import com.groupnine.mediasocial.exception.PostException;
 import com.groupnine.mediasocial.exception.UserException;
@@ -41,33 +42,43 @@ public class PostController {
 		List<Post> listPost = postService.getPostsOfFriends(userId);
 		for (Post post : listPost) {
 			
-			post.getUser().setComments(null);
-			post.getUser().setFriends(null);
-			//post.getUser().setLikes(null);
-			post.getUser().setReceivedFriendRequest(null);
-			post.getUser().setSentFriendRequest(null);
-			
-			post.setShared(null);
-			
-			List<Comment> listComment = post.getComments();
-			List<Media> listMedia = post.getMedia();
-			
-			for (Comment comment: listComment) {
-				comment.getUser().setComments(null);
-				comment.getUser().setFriends(null);
-				comment.getUser().setLikes(null);
-				comment.getUser().setReceivedFriendRequest(null);
-				comment.getUser().setSentFriendRequest(null);
+			try {
+				post.getUser().setComments(null);
+				post.getUser().setFriends(null);
+				//post.getUser().setLikes(null);
+				post.getUser().setReceivedFriendRequest(null);
+				post.getUser().setSentFriendRequest(null);
 				
-				comment.getPost().setComments(null);
-				comment.getPost().setLikes(null);
-				comment.getPost().setMedia(null);
-				comment.getPost().setShared(null);
-				//comment.getPost().setUser(null);
+				post.setShared(null);
+				
+				List<Comment> listComment = post.getComments();
+				
+				for (Comment comment: listComment) {
+					comment.getUser().setComments(null);
+					comment.getUser().setFriends(null);
+					comment.getUser().setLikes(null);
+					comment.getUser().setReceivedFriendRequest(null);
+					comment.getUser().setSentFriendRequest(null);
+					
+					comment.getPost().setComments(null);
+					comment.getPost().setLikes(null);
+					comment.getPost().setMedia(null);
+					comment.getPost().setShared(null);
+					//comment.getPost().setUser(null);
+				}
+				
+				
+				List<Media> listMedia = post.getMedia();
+				for (Media media : listMedia) {
+					media.setPostid(null);
+				}
+				
+				List<Reaction> listReaction = post.getLikes();
+				for (Reaction reaction : listReaction) {
+					reaction.setPost(null);
+				}
 			}
-			
-			for (Media media : listMedia) {
-				media.setPostid(null);
+			catch (Exception e) {
 			}
 			
 		}
@@ -107,6 +118,11 @@ public class PostController {
 		
 		for (Media media : listMedia) {
 			media.setPostid(null);
+		}
+		
+		List<Reaction> listReaction = post.getLikes();
+		for (Reaction reaction : listReaction) {
+			reaction.setPost(null);
 		}
 		
 		return new ResponseEntity<>(post, HttpStatus.OK);
