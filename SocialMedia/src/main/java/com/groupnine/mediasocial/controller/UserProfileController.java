@@ -61,6 +61,7 @@ public class UserProfileController {
 			post.setUser(null);
 			post.setMedia(null);
 			post.setComments(null);
+			post.setLikes(null);
 		}
 		
 		return new ResponseEntity<User>(user,HttpStatus.OK);
