@@ -31,6 +31,7 @@ public class UserController {
 		user.setLikes(null);
 		user.setComments(null);
 		user.setShared(null);
+		user.setPosts(null);
 		return new ResponseEntity<User>(user,HttpStatus.OK);
 	}
 	

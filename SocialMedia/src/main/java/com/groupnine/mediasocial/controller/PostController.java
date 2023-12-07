@@ -45,7 +45,7 @@ public class PostController {
 			try {
 				post.getUser().setComments(null);
 				post.getUser().setFriends(null);
-				//post.getUser().setLikes(null);
+				post.getUser().setLikes(null);
 				post.getUser().setReceivedFriendRequest(null);
 				post.getUser().setSentFriendRequest(null);
 				
@@ -77,6 +77,7 @@ public class PostController {
 				List<Reaction> listReaction = post.getLikes();
 				for (Reaction reaction : listReaction) {
 					reaction.setPost(null);
+					reaction.getUser().setPosts(null);
 				}
 			}
 			catch (Exception e) {
@@ -96,10 +97,10 @@ public class PostController {
 		post.getUser().setLikes(null);
 		post.getUser().setReceivedFriendRequest(null);
 		post.getUser().setSentFriendRequest(null);
+		post.getUser().setPosts(null);
 		
 		post.setShared(null);
 		
-		post.getUser().setPosts(null);
 		List<Comment> listComment = post.getComments();
 		List<Media> listMedia = post.getMedia();
 		
@@ -125,6 +126,7 @@ public class PostController {
 		List<Reaction> listReaction = post.getLikes();
 		for (Reaction reaction : listReaction) {
 			reaction.setPost(null);
+			reaction.getUser().setPosts(null);
 		}
 		
 		return new ResponseEntity<>(post, HttpStatus.OK);
