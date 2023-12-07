@@ -96,11 +96,11 @@ public class UserProfileController {
 		}
 	}
 	
-//	@GetMapping("numPost/{id}")
-//	public int getNumPost(@PathVariable Long id) throws UserException{
-//		User user = userService.findUserById(id);
-//		
-//		
-//	}
+	@GetMapping("numPost/{id}")
+	public int getNumPost(@PathVariable Long id) throws UserException{
+		User user = userService.findUserById(id);
+		
+		return user.getPosts().size();
+	}
 
 }

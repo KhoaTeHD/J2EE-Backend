@@ -50,6 +50,7 @@ public class PostController {
 				post.getUser().setSentFriendRequest(null);
 				
 				post.setShared(null);
+				post.getUser().setPosts(null);
 				
 				List<Comment> listComment = post.getComments();
 				
@@ -98,6 +99,7 @@ public class PostController {
 		
 		post.setShared(null);
 		
+		post.getUser().setPosts(null);
 		List<Comment> listComment = post.getComments();
 		List<Media> listMedia = post.getMedia();
 		
