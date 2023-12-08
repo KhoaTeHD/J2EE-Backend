@@ -57,6 +57,7 @@ public class PostController {
 				post.getUser().setLikes(null);
 				post.getUser().setReceivedFriendRequest(null);
 				post.getUser().setSentFriendRequest(null);
+				post.getUser().setChat(null);
 				
 				post.setShared(null);
 				post.getUser().setPosts(null);
@@ -69,6 +70,7 @@ public class PostController {
 					comment.getUser().setLikes(null);
 					comment.getUser().setReceivedFriendRequest(null);
 					comment.getUser().setSentFriendRequest(null);
+					comment.getUser().setChat(null);
 					
 					comment.getPost().setComments(null);
 					comment.getPost().setLikes(null);
@@ -93,6 +95,7 @@ public class PostController {
 				for (Reaction reaction : listReaction) {
 					reaction.setPost(null);
 					reaction.getUser().setPosts(null);
+					reaction.getUser().setChat(null);
 				}
 			}
 			catch (Exception e) {
@@ -113,6 +116,7 @@ public class PostController {
 		post.getUser().setReceivedFriendRequest(null);
 		post.getUser().setSentFriendRequest(null);
 		post.getUser().setPosts(null);
+		post.getUser().setChat(null);
 		
 		post.setShared(null);
 		
@@ -126,6 +130,7 @@ public class PostController {
 			comment.getUser().setReceivedFriendRequest(null);
 			comment.getUser().setSentFriendRequest(null);
 			comment.getUser().setPosts(null);
+			comment.getUser().setChat(null);
 			//comment.getPost().setComments(null);
 			//comment.getPost().setLikes(null);
 			//comment.getPost().setMedia(null);
@@ -170,6 +175,7 @@ public class PostController {
 			reaction.getUser().setLikes(null);
 			reaction.getUser().setReceivedFriendRequest(null);
 			reaction.getUser().setSentFriendRequest(null);
+			reaction.getUser().setChat(null);
 		}
 		
 		return new ResponseEntity<>(post, HttpStatus.OK);
@@ -178,7 +184,60 @@ public class PostController {
 	@PostMapping("/newpost")
 	public Post savePost(@Valid @RequestBody Post post) { 
 		
-        return postService.savePost(post); 
+		Post myPost = postService.savePost(post);
+		
+		try {
+			myPost.getUser().setComments(null);
+			myPost.getUser().setFriends(null);
+			myPost.getUser().setLikes(null);
+			myPost.getUser().setReceivedFriendRequest(null);
+			myPost.getUser().setSentFriendRequest(null);
+			myPost.getUser().setChat(null);
+			
+			myPost.setShared(null);
+			myPost.getUser().setPosts(null);
+			
+			List<Comment> listComment = myPost.getComments();
+			
+			for (Comment comment: listComment) {
+				comment.getUser().setComments(null);
+				comment.getUser().setFriends(null);
+				comment.getUser().setLikes(null);
+				comment.getUser().setReceivedFriendRequest(null);
+				comment.getUser().setSentFriendRequest(null);
+				comment.getUser().setChat(null);
+				
+				comment.getPost().setComments(null);
+				comment.getPost().setLikes(null);
+				comment.getPost().setMedia(null);
+				comment.getPost().setShared(null);
+				//comment.getPost().setUser(null);
+				comment.setReplyFor(null);
+				for (Comment cmt : comment.getReplies()) {
+					cmt.setReplyFor(null);
+					cmt.setUser(null);
+					cmt.setPost(null);
+				}
+			}
+			
+			
+			List<Media> listMedia = myPost.getMedia();
+			for (Media media : listMedia) {
+				media.setPostid(null);
+			}
+			
+			List<Reaction> listReaction = myPost.getLikes();
+			for (Reaction reaction : listReaction) {
+				reaction.setPost(null);
+				reaction.getUser().setPosts(null);
+				reaction.getUser().setChat(null);
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+        return myPost; 
     }
 	
 	@DeleteMapping("/{id}")
@@ -216,6 +275,7 @@ public class PostController {
 	
 	@PutMapping("/{id}") 
     public Post updatePost(@RequestBody Post post, @PathVariable("id") long postId) { 
+		mediaService.deleteMediaByPostId(postId);
         return postService.updatePost(post, postId); 
     }
 	

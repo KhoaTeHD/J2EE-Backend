@@ -22,4 +22,9 @@ public class MediaService implements IMediaService{
 		mediaRepository.deleteById(mediaID);
 	}
 
+	@Override
+	public void deleteMediaByPostId(long PostId) {
+		mediaRepository.deleteByPostId(PostId);
+	}
+
 }

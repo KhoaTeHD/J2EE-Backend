@@ -43,6 +43,8 @@ public class FriendRequestController {
 			fr.getSender().setComments(null);
 			fr.getSender().setPosts(null);
 			fr.setReceiver(null);
+			fr.getSender().setChat(null);
+			fr.getSender().setLikes(null);
 		}
 		
 		return new ResponseEntity<List<FriendRequest>>(user.getReceivedFriendRequest(), HttpStatus.OK);

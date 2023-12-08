@@ -41,6 +41,7 @@ public class FriendListController {
 			u.setComments(null);
 			u.setPosts(null);
 			u.setChat(null);
+			u.setLikes(null);
 		}
 		
 		return new ResponseEntity<List<User>>(user.getFriends(),HttpStatus.OK);
@@ -75,6 +76,8 @@ public class FriendListController {
 			u.setReceivedFriendRequest(null);
 			u.setComments(null);
 			u.setPosts(null);
+			u.setChat(null);
+			u.setLikes(null);
 		}
 		
 		return new ResponseEntity<List<User>>(recommend,HttpStatus.OK);

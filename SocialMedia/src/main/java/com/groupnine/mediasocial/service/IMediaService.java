@@ -10,4 +10,6 @@ public interface IMediaService {
 	public Media saveMedia(Media media);
 	
 	public void deleteMediaById(long mediaID); 
+	
+	public void deleteMediaByPostId(long PostId);
 }
