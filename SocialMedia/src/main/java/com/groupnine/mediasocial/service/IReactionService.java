@@ -15,4 +15,6 @@ public interface IReactionService {
 	
 	public Optional<Reaction> findByUserIdAndPostId(Long userId, Long postId);
 	
+	public Optional<?> deleteReactionByPostIdAndUserId(Long userId, Long postId);
+	
 }

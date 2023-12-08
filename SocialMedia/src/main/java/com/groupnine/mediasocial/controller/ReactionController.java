@@ -16,7 +16,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.groupnine.mediasocial.entity.Reaction;
+import com.groupnine.mediasocial.exception.PostException;
+import com.groupnine.mediasocial.exception.UserException;
+import com.groupnine.mediasocial.payload.request.CommentRequest;
+import com.groupnine.mediasocial.payload.request.ReactionRequest;
+import com.groupnine.mediasocial.service.PostService;
 import com.groupnine.mediasocial.service.ReactionService;
+import com.groupnine.mediasocial.service.UserService;
 
 import jakarta.validation.Valid;
 
@@ -27,15 +33,20 @@ public class ReactionController {
 	@Autowired
 	ReactionService reactionService;
 	
+	@Autowired
+	PostService postService;
+	
+	@Autowired
+	UserService userService;
 	
 	@PostMapping("/new")
 	public Reaction saveReaction(@Valid @RequestBody Reaction reaction) {
 		return reactionService.saveReaction(reaction);
 	}
 	
-	@DeleteMapping("/{id}")
-	public String deleteReactionById(@PathVariable("id") long reactionId) {
-		reactionService.deleteReaction(reactionId);
+	@DeleteMapping("/delete")
+	public String deleteReaction(@RequestParam Long userId, @RequestParam Long postId) {
+		reactionService.deleteReactionByPostIdAndUserId(userId, postId);
 		return "Deleted";
 	}
 	

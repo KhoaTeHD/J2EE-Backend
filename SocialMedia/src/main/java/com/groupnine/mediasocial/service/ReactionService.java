@@ -29,5 +29,10 @@ public class ReactionService implements IReactionService{
 		return reactionRepository.findByUserIdAndPostId(userId, postId);
 	}
 
+	@Override
+	public Optional<?> deleteReactionByPostIdAndUserId(Long userId, Long postId) {
+		return reactionRepository.deleteReactionByPostIdAndUserId(userId, postId);
+	}
+
 
 }
