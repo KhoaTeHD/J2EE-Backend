@@ -32,6 +32,7 @@ public class ChatService {
 			chatmessage.getUser().setFriends(null);
 			chatmessage.getUser().setLikes(null);
 			chatmessage.getUser().setPosts(null);
+			chatmessage.getUser().setChat(null);
 		}
     	
         return chatmessages;
