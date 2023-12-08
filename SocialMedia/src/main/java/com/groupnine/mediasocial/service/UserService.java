@@ -16,6 +16,8 @@ public interface UserService {
 	
 	public int getMutualFriends(Long CurrentUserId, Long targetUserId) throws UserException;
 	
+	public int checkFriend(Long CurrentUserId, Long targetUserId) throws UserException;
+	
 	public List<User> findFriendForId(Long userId) throws UserException;
 	
 	public User updateProfile(User updatedUser, User existingUser)throws UserException;

@@ -53,9 +53,7 @@ public class CommentController {
 		Comment cmt = new Comment();
 		cmt.setCommentId(comment.getCommentId());
 		cmt.setContent(comment.getContent());
-//		if(getCommentById(comment.getReplyFor()) != null) {
-//			cmt.setReplyFor(getCommentById(comment.getReplyFor()));
-//		}
+		cmt.setReplyFor(getCommentById(comment.getReplyFor()));
 		cmt.setPost(postService.findPostById(comment.getPostId()));
 		cmt.setUser(userService.findUserById(comment.getUserId()));
 		return commentService.saveComment(cmt);
@@ -70,9 +68,6 @@ public class CommentController {
 	@GetMapping("/get/{id}")
 	public Comment getCommentById(@PathVariable Long id) throws UserException{
 		Comment cmt = commentService.getCommentById(id);
-		
-
-		
 		return cmt;
 	}
 }

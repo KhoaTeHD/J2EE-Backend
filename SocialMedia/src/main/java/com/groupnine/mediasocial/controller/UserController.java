@@ -36,13 +36,6 @@ public class UserController {
 		return new ResponseEntity<User>(user,HttpStatus.OK);
 	}
 	
-	@GetMapping("/m/{userIds}")
-	public ResponseEntity<List<User>> findUserByUserIdsHandler(@PathVariable List<Long> userIds) throws UserException{
-		List<User> users = userService.findUserByIds(userIds);
-		
-		return new ResponseEntity<List<User>>(users,HttpStatus.OK);
-	}
-	
 	@GetMapping("/search")
 	public ResponseEntity<List<User>> searchUserHandler(@RequestParam("q") String query) throws UserException{
 		List<User> users = userService.searchUser(query);
@@ -52,6 +45,10 @@ public class UserController {
 			u.setReceivedFriendRequest(null);
 			u.setSentFriendRequest(null);
 			u.setChat(null);
+			u.setComments(null);
+			u.setLikes(null);
+			u.setPosts(null);
+			u.setShared(null);
 		}
 		
 		return new ResponseEntity<List<User>>(users,HttpStatus.OK);

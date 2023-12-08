@@ -1,5 +1,6 @@
 package com.groupnine.mediasocial.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.catalina.startup.ClassLoaderFactory.Repository;
@@ -27,6 +28,7 @@ import com.groupnine.mediasocial.service.CommentService;
 import com.groupnine.mediasocial.service.MediaService;
 import com.groupnine.mediasocial.service.PostService;
 import com.groupnine.mediasocial.service.ReactionService;
+import com.zaxxer.hikari.metrics.dropwizard.CodaHaleMetricsTracker;
 
 import jakarta.validation.Valid;
 
@@ -108,6 +110,12 @@ public class PostController {
 	@GetMapping("/{id}")
 	public ResponseEntity<?> findPostById(@PathVariable Long id) throws PostException{
 		
+		try {
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
 		Post post = postService.findPostById(id);
 		
 		post.getUser().setComments(null);
@@ -120,10 +128,20 @@ public class PostController {
 		
 		post.setShared(null);
 		
+		
 		List<Comment> listComment = post.getComments();
 		List<Media> listMedia = post.getMedia();
 		
-		for (Comment comment: listComment) {
+		List<Comment> listCommentnew = new ArrayList<Comment>();
+		
+		for(Comment comment: listComment) {
+			if(comment.getReplyFor() != null) {
+				continue;
+			}
+			listCommentnew.add(comment);
+		}
+		
+		for (Comment comment: listCommentnew) {
 			comment.getUser().setComments(null);
 			comment.getUser().setFriends(null);
 			comment.getUser().setLikes(null);
@@ -131,36 +149,83 @@ public class PostController {
 			comment.getUser().setSentFriendRequest(null);
 			comment.getUser().setPosts(null);
 			comment.getUser().setChat(null);
+			//comment.setReplies(null);
+
 			//comment.getPost().setComments(null);
 			//comment.getPost().setLikes(null);
 			//comment.getPost().setMedia(null);
 			//comment.getPost().setShared(null);
 			//comment.getPost().setUser(null);
 			comment.setPost(null);
-			comment.setReplyFor(null);
-			for (Comment cmt : comment.getReplies()) {
-				cmt.setReplyFor(null);
-				cmt.setUser(null);
-				cmt.setPost(null);
-				
-//				cmt.getUser().setFriends(null);
-//				cmt.getUser().setPosts(null);
-//				cmt.getUser().setComments(null);
-//				cmt.getUser().setSentFriendRequest(null);
-//				cmt.getUser().setReceivedFriendRequest(null);
-//				cmt.getUser().setLikes(null);
-//				cmt.getUser().setShared(null);
-//				
-//				cmt.getPost().setMedia(null);
-//				cmt.getPost().setComments(null);
-//				cmt.getPost().setLikes(null);
-//				cmt.getPost().setShared(null);
-//				cmt.getPost().setUser(null);
-//				
-//				cmt.getReplyFor().setReplies(null);
-//				cmt.getReplyFor().setReplyFor(null);
+//			comment.setReplyFor(null);
+			if(comment.getReplyFor() != null) {
+				listComment.remove(comment);
+				continue;
+//				comment.getReplyFor().setPost(null);
+//				comment.getReplyFor().getUser().setComments(null);
+//				comment.getReplyFor().getUser().setFriends(null);
+//				comment.getReplyFor().getUser().setLikes(null);
+//				comment.getReplyFor().getUser().setReceivedFriendRequest(null);
+//				comment.getReplyFor().getUser().setSentFriendRequest(null);
+//				comment.getReplyFor().getUser().setPosts(null);
 			}
+			
+			if(comment.getReplies() != null) {
+				for (Comment cmt : comment.getReplies()) {
+					cmt.setReplyFor(null);
+					//cmt.setUser(null);
+					cmt.getUser().setComments(null);
+					cmt.getUser().setFriends(null);
+					cmt.getUser().setLikes(null);
+					cmt.getUser().setReceivedFriendRequest(null);
+					cmt.getUser().setSentFriendRequest(null);
+					cmt.getUser().setPosts(null);
+					cmt.getUser().setChat(null);
+					
+					cmt.setPost(null);
+					cmt.setReplies(null);
+					cmt.setReplyFor(null);
+				}
+			}
+			
+			
+//			try {
+//				for (Comment cmt : comment.getReplies()) {
+//					cmt.setReplyFor(null);
+//					//cmt.setUser(null);
+//					cmt.getUser().setComments(null);
+//					cmt.getUser().setFriends(null);
+//					cmt.getUser().setLikes(null);
+//					cmt.getUser().setReceivedFriendRequest(null);
+//					cmt.getUser().setSentFriendRequest(null);
+//					cmt.getUser().setPosts(null);
+//					
+//					cmt.setPost(null);
+//					cmt.setReplies(null);
+					
+//					cmt.getUser().setFriends(null);
+//					cmt.getUser().setPosts(null);
+//					cmt.getUser().setComments(null);
+//					cmt.getUser().setSentFriendRequest(null);
+//					cmt.getUser().setReceivedFriendRequest(null);
+//					cmt.getUser().setLikes(null);
+//					cmt.getUser().setShared(null);
+//					
+//					cmt.getPost().setMedia(null);
+//					cmt.getPost().setComments(null);
+//					cmt.getPost().setLikes(null);
+//					cmt.getPost().setShared(null);
+//					cmt.getPost().setUser(null);
+					
+//					cmt.getReplyFor().setReplies(null);
+//					cmt.getReplyFor().setReplyFor(null);
+//				}
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+			
 		}
+		post.setComments(listCommentnew);
 		
 		for (Media media : listMedia) {
 			media.setPostid(null);
