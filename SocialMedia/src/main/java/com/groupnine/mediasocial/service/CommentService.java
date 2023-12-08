@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.groupnine.mediasocial.entity.Comment;
+import com.groupnine.mediasocial.entity.Post;
+import com.groupnine.mediasocial.exception.PostException;
 import com.groupnine.mediasocial.repository.CommentRepository;
 
 @Service
@@ -25,8 +27,13 @@ public class CommentService implements ICommentService{
 	}
 
 	@Override
-	public Optional<Comment> getCommentById(long commentId) {
-		return commentRepository.findById(commentId);
+	public Comment getCommentById(long commentId) {
+		Optional<Comment> opt = commentRepository.findById(commentId);
+		
+		if(opt.isPresent()) {
+			return opt.get();
+		}
+		return null;
 	}
 
 }

@@ -9,7 +9,7 @@ import com.groupnine.mediasocial.entity.Comment;
 @Service
 public interface ICommentService {
 	
-	public Optional<Comment> getCommentById(long commentId);
+	public Comment getCommentById(long commentId);
 	
 	public Comment saveComment(Comment comment);
 	

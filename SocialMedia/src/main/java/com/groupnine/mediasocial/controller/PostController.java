@@ -137,6 +137,23 @@ public class PostController {
 				cmt.setReplyFor(null);
 				cmt.setUser(null);
 				cmt.setPost(null);
+				
+//				cmt.getUser().setFriends(null);
+//				cmt.getUser().setPosts(null);
+//				cmt.getUser().setComments(null);
+//				cmt.getUser().setSentFriendRequest(null);
+//				cmt.getUser().setReceivedFriendRequest(null);
+//				cmt.getUser().setLikes(null);
+//				cmt.getUser().setShared(null);
+//				
+//				cmt.getPost().setMedia(null);
+//				cmt.getPost().setComments(null);
+//				cmt.getPost().setLikes(null);
+//				cmt.getPost().setShared(null);
+//				cmt.getPost().setUser(null);
+//				
+//				cmt.getReplyFor().setReplies(null);
+//				cmt.getReplyFor().setReplyFor(null);
 			}
 		}
 		

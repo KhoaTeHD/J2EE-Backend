@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -17,9 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.groupnine.mediasocial.entity.Comment;
 import com.groupnine.mediasocial.entity.Media;
 import com.groupnine.mediasocial.entity.Post;
+import com.groupnine.mediasocial.entity.User;
 import com.groupnine.mediasocial.exception.PostException;
 import com.groupnine.mediasocial.exception.UserException;
 import com.groupnine.mediasocial.payload.request.CommentRequest;
+import com.groupnine.mediasocial.repository.CommentRepository;
 import com.groupnine.mediasocial.service.CommentService;
 import com.groupnine.mediasocial.service.PostService;
 import com.groupnine.mediasocial.service.UserService;
@@ -50,8 +53,9 @@ public class CommentController {
 		Comment cmt = new Comment();
 		cmt.setCommentId(comment.getCommentId());
 		cmt.setContent(comment.getContent());
-		Optional <Comment> replyCmt = commentService.getCommentById(comment.getReplyFor());
-		cmt.setReplyFor(replyCmt.get());
+//		if(getCommentById(comment.getReplyFor()) != null) {
+//			cmt.setReplyFor(getCommentById(comment.getReplyFor()));
+//		}
 		cmt.setPost(postService.findPostById(comment.getPostId()));
 		cmt.setUser(userService.findUserById(comment.getUserId()));
 		return commentService.saveComment(cmt);
@@ -61,5 +65,14 @@ public class CommentController {
 	public String deleteCommentById(@PathVariable("id") long commentId) {
 		commentService.deleteCommentById(commentId);
 		return "Xóa thành công!";
+	}
+	
+	@GetMapping("/get/{id}")
+	public Comment getCommentById(@PathVariable Long id) throws UserException{
+		Comment cmt = commentService.getCommentById(id);
+		
+
+		
+		return cmt;
 	}
 }
