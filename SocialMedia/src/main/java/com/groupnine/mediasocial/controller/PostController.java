@@ -87,7 +87,7 @@ public class PostController {
 		}
 		return new ResponseEntity<List<Post>>(listPost, HttpStatus.OK);
 	}
-@GetMapping("/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<?> findPostById(@PathVariable Long id) throws PostException{
 		
 		Post post = postService.findPostById(id);
@@ -117,6 +117,9 @@ public class PostController {
 			//comment.getPost().setShared(null);
 			//comment.getPost().setUser(null);
 			comment.setPost(null);
+			for (Comment cmt : comment.getReplies()) {
+				cmt.setReplyFor(null);
+			}
 		}
 		
 		for (Media media : listMedia) {

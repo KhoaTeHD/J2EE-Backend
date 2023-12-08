@@ -1,10 +1,13 @@
 package com.groupnine.mediasocial.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.groupnine.mediasocial.entity.Comment;
+import com.groupnine.mediasocial.entity.Media;
+import com.groupnine.mediasocial.entity.Post;
 import com.groupnine.mediasocial.exception.PostException;
 import com.groupnine.mediasocial.exception.UserException;
 import com.groupnine.mediasocial.payload.request.CommentRequest;
@@ -45,9 +50,16 @@ public class CommentController {
 		Comment cmt = new Comment();
 		cmt.setCommentId(comment.getCommentId());
 		cmt.setContent(comment.getContent());
-		cmt.setReplyFor(cmt.getReplyFor());
+		Optional <Comment> replyCmt = commentService.getCommentById(comment.getReplyFor());
+		cmt.setReplyFor(replyCmt.get());
 		cmt.setPost(postService.findPostById(comment.getPostId()));
 		cmt.setUser(userService.findUserById(comment.getUserId()));
 		return commentService.saveComment(cmt);
     }
+	
+	@DeleteMapping("/delete/{id}")
+	public String deleteCommentById(@PathVariable("id") long commentId) {
+		commentService.deleteCommentById(commentId);
+		return "Xóa thành công!";
+	}
 }

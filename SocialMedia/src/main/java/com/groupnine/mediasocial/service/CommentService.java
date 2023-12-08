@@ -1,5 +1,7 @@
 package com.groupnine.mediasocial.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,11 @@ public class CommentService implements ICommentService{
 	@Override
 	public void deleteCommentById(long commentId) {
 		commentRepository.deleteById(commentId);
+	}
+
+	@Override
+	public Optional<Comment> getCommentById(long commentId) {
+		return commentRepository.findById(commentId);
 	}
 
 }
