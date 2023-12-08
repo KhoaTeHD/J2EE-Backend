@@ -75,6 +75,12 @@ public class PostController {
 					comment.getPost().setMedia(null);
 					comment.getPost().setShared(null);
 					//comment.getPost().setUser(null);
+					comment.setReplyFor(null);
+					for (Comment cmt : comment.getReplies()) {
+						cmt.setReplyFor(null);
+						cmt.setUser(null);
+						cmt.setPost(null);
+					}
 				}
 				
 				
@@ -126,8 +132,11 @@ public class PostController {
 			//comment.getPost().setShared(null);
 			//comment.getPost().setUser(null);
 			comment.setPost(null);
+			comment.setReplyFor(null);
 			for (Comment cmt : comment.getReplies()) {
 				cmt.setReplyFor(null);
+				cmt.setUser(null);
+				cmt.setPost(null);
 			}
 		}
 		
