@@ -23,8 +23,10 @@ import com.groupnine.mediasocial.entity.Reaction;
 import com.groupnine.mediasocial.entity.User;
 import com.groupnine.mediasocial.exception.PostException;
 import com.groupnine.mediasocial.exception.UserException;
+import com.groupnine.mediasocial.service.CommentService;
 import com.groupnine.mediasocial.service.MediaService;
 import com.groupnine.mediasocial.service.PostService;
+import com.groupnine.mediasocial.service.ReactionService;
 
 import jakarta.validation.Valid;
 
@@ -37,6 +39,12 @@ public class PostController {
 	
 	@Autowired
 	MediaService mediaService;
+	
+	@Autowired 
+	ReactionService reactionService;
+	
+	@Autowired
+	CommentService commentService;
 	
 	@GetMapping("/recomment/{userId}")
 	public ResponseEntity<List<Post>> getRecommentPost(@PathVariable Long userId){
@@ -148,10 +156,26 @@ public class PostController {
 	public String deletePostById(@PathVariable("id") long postId) {
 		try {
 			Post post = postService.findPostById(postId);
+			
+			
 			List<Media> listMedia = post.getMedia();
 			if (listMedia.size() > 0) {
 				for (Media media : listMedia) {
 					mediaService.deleteMediaById(media.getMediaId());
+				}
+			}
+			
+			List<Reaction> listReaction = post.getLikes();
+			if (listReaction.size() > 0) {
+				for (Reaction reaction : listReaction) {
+					reactionService.deleteReaction(reaction.getId());
+				}
+			}
+			
+			List<Comment> listComment = post.getComments();
+			if (listComment.size() > 0) {
+				for (Comment comment : listComment) {
+					commentService.deleteCommentById(comment.getCommentId());
 				}
 			}
 			postService.deletePostById(postId);
