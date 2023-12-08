@@ -54,6 +54,14 @@ public class FriendListController {
 		return result;
 	}
 	
+	@GetMapping("/checkfriend/{userIds}")
+	public int checkFriendHandler(@PathVariable List<Long> userIds) throws UserException{
+		
+		int result = userService.checkFriend(userIds.get(0), userIds.get(1));
+		
+		return result;
+	}
+	
 	@DeleteMapping("/unfriend/{userId}/{friendId}")
 	public ResponseEntity<?> Unfriend(@PathVariable Long userId,@PathVariable Long friendId) {
 		boolean check = friendservice.Unfriend(userId, friendId);
@@ -75,6 +83,7 @@ public class FriendListController {
 			u.setReceivedFriendRequest(null);
 			u.setComments(null);
 			u.setPosts(null);
+			u.setChat(null);
 		}
 		
 		return new ResponseEntity<List<User>>(recommend,HttpStatus.OK);

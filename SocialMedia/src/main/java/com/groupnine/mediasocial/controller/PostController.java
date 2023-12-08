@@ -59,6 +59,7 @@ public class PostController {
 				post.getUser().setLikes(null);
 				post.getUser().setReceivedFriendRequest(null);
 				post.getUser().setSentFriendRequest(null);
+				post.getUser().setChat(null);
 				
 				post.setShared(null);
 				post.getUser().setPosts(null);
@@ -71,6 +72,7 @@ public class PostController {
 					comment.getUser().setLikes(null);
 					comment.getUser().setReceivedFriendRequest(null);
 					comment.getUser().setSentFriendRequest(null);
+					comment.getUser().setChat(null);
 					
 					comment.getPost().setComments(null);
 					comment.getPost().setLikes(null);
@@ -121,6 +123,7 @@ public class PostController {
 		post.getUser().setReceivedFriendRequest(null);
 		post.getUser().setSentFriendRequest(null);
 		post.getUser().setPosts(null);
+		post.getUser().setChat(null);
 		
 		post.setShared(null);
 		
@@ -144,6 +147,7 @@ public class PostController {
 			comment.getUser().setReceivedFriendRequest(null);
 			comment.getUser().setSentFriendRequest(null);
 			comment.getUser().setPosts(null);
+			comment.getUser().setChat(null);
 			//comment.setReplies(null);
 
 			//comment.getPost().setComments(null);
@@ -175,6 +179,7 @@ public class PostController {
 					cmt.getUser().setReceivedFriendRequest(null);
 					cmt.getUser().setSentFriendRequest(null);
 					cmt.getUser().setPosts(null);
+					cmt.getUser().setChat(null);
 					
 					cmt.setPost(null);
 					cmt.setReplies(null);
@@ -234,6 +239,7 @@ public class PostController {
 			reaction.getUser().setLikes(null);
 			reaction.getUser().setReceivedFriendRequest(null);
 			reaction.getUser().setSentFriendRequest(null);
+			reaction.getUser().setChat(null);
 		}
 		
 		return new ResponseEntity<>(post, HttpStatus.OK);

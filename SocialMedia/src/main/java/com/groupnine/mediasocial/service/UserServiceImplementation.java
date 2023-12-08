@@ -161,4 +161,31 @@ public class UserServiceImplementation implements UserService {
 		User result = userRepository.save(updatedUser);
 		return result != null ? 1 : 0;
 	}
+
+	@Override
+	public int checkFriend(Long CurrentUserId, Long targetUserId) throws UserException {
+		
+		Optional<User> currentUser = userRepository.findById(CurrentUserId);		
+		Optional<User> targetUser = userRepository.findById(targetUserId);
+		
+		if(currentUser.isPresent() && targetUser.isPresent()) {
+			List<User> currentFriends = currentUser.get().getFriends();
+			List<FriendRequest> request = currentUser.get().getReceivedFriendRequest();
+			
+			if(currentFriends.contains(targetUser.get())) {
+				return 1;
+			}
+			
+			for (FriendRequest friendRequest : request) {
+				if(friendRequest.getSender().equals(targetUser.get())) {
+					return 2;
+				}
+			}
+			
+			return 0;
+		}
+		
+		throw new UserException("you can't check friend");
+		
+	}
 }
