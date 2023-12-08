@@ -18,7 +18,19 @@ public class CloudinaryService {
 	@Autowired
     private final Cloudinary cloudinary = new CloudinaryConfig().getCloudinary();
 	
-    public Map upload(MultipartFile file)  {
+    public Map uploadImage(MultipartFile file)  {
+        try{
+        	Map params = ObjectUtils.asMap(
+        		    "folder", "media");
+            Map data = this.cloudinary.uploader().upload(file.getBytes(), params);
+            
+            return data;
+        }catch (IOException io){
+            throw new RuntimeException("Image upload fail");
+        }
+    }
+    
+    public Map uploadAvatar(MultipartFile file)  {
         try{
         	Map params = ObjectUtils.asMap(
         		    "folder", "avatar");
@@ -27,6 +39,22 @@ public class CloudinaryService {
             return data;
         }catch (IOException io){
             throw new RuntimeException("Image upload fail");
+        }
+    }
+    
+    public String uploadVideo(MultipartFile file)  {
+        try{
+        	Map params = ObjectUtils.asMap(
+        		    "folder", "media",
+        		    "resource_type", "video"
+        			);
+        	Map<?, ?> result = cloudinary.uploader().upload(file.getBytes(), params);
+            
+        	String videoUrl = (String) result.get("secure_url");
+            
+            return videoUrl;
+        }catch (IOException io){
+            throw new RuntimeException("Video upload fail");
         }
     }
     
@@ -40,6 +68,23 @@ public class CloudinaryService {
             return data;
         }catch (IOException io){
             throw new RuntimeException("Image destroy fail");
+        }
+    }
+    
+    public Map deleteVideo(String url)  {
+        try{
+        	String[] s = url.split("/");
+        	String public_id = s[s.length-2] + "/" + s[s.length-1].split("\\.")[0];
+        	
+        	Map params = ObjectUtils.asMap(
+        		    "resource_type", "video"
+        			);
+        	
+            Map data = this.cloudinary.uploader().destroy(public_id , params);
+            
+            return data;
+        }catch (IOException io){
+            throw new RuntimeException("Video destroy fail");
         }
     }
 }
