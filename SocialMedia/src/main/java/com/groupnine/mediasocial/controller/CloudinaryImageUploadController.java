@@ -25,13 +25,32 @@ public class CloudinaryImageUploadController {
 
     @PostMapping("/upload")
     public ResponseEntity<Map> uploadImage(@RequestParam("image")MultipartFile file){
-        Map data = this.cloudinaryService.upload(file);
+        Map data = this.cloudinaryService.uploadImage(file);
+        return new ResponseEntity<>(data, HttpStatus.OK);
+    }
+    
+    @PostMapping("/uploadAvatar")
+    public ResponseEntity<Map> uploadAvatar(@RequestParam("image")MultipartFile file){
+        Map data = this.cloudinaryService.uploadAvatar(file);
+        return new ResponseEntity<>(data, HttpStatus.OK);
+    }
+    
+    @PostMapping("/uploadVideo")
+    public ResponseEntity<String> uploadVideo(@RequestParam("image")MultipartFile file){
+        String data = this.cloudinaryService.uploadVideo(file);
+       
         return new ResponseEntity<>(data, HttpStatus.OK);
     }
     
     @PostMapping("/delete")
     public ResponseEntity<Map> deleteImage(@RequestParam("url") String url){
         Map data = this.cloudinaryService.delete(url);
+        return new ResponseEntity<>(data, HttpStatus.OK);
+    }
+    
+    @PostMapping("/deleteVideo")
+    public ResponseEntity<Map> deleteVideo(@RequestParam("url") String url){
+        Map data = this.cloudinaryService.deleteVideo(url);
         return new ResponseEntity<>(data, HttpStatus.OK);
     }
 }

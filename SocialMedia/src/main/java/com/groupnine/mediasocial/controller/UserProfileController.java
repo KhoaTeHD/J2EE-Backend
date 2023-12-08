@@ -57,6 +57,7 @@ public class UserProfileController {
 		user.setReceivedFriendRequest(null);
 		user.setShared(null);
 		user.setLikes(null);
+		user.setChat(null);
 		for (Post post : user.getPosts()) {
 			post.setUser(null);
 			post.setMedia(null);

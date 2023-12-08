@@ -73,6 +73,17 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Comment> comments;
     
+    @OneToMany(mappedBy = "user")
+    private List<Chatmessage> chat;
+    
+	public List<Chatmessage> getChat() {
+		return chat;
+	}
+
+	public void setChat(List<Chatmessage> chat) {
+		this.chat = chat;
+	}
+
 	public User() {
 
 	}
