@@ -75,6 +75,7 @@ public class WebSecurityConfig {
 	              .requestMatchers("/media/**").permitAll()
 	              .requestMatchers("/comment/**").permitAll()
 	              .requestMatchers("/chat/**").permitAll()
+	              .requestMatchers("/**").permitAll()
 	              .anyRequest().authenticated()
 	        );
 
