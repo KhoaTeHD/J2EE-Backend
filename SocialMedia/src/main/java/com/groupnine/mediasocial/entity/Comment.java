@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,7 +30,7 @@ public class Comment {
 	@JoinColumn(name = "replyfor")
 	private Comment replyFor;
 	
-	@OneToMany(mappedBy = "replyFor")
+	@OneToMany(mappedBy = "replyFor", cascade = {CascadeType.REMOVE})
 	private List<Comment> replies;
 	
 	@ManyToOne
